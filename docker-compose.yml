@@ -28,9 +28,9 @@ services:
     - ./src/mariadb:/var/lib/mysql
    environment:
     MYSQL_RANDOM_ROOT_PASSWORD: 1
-    MYSQL_DATABASE: dev
-    MYSQL_USER: dev
-    MYSQL_PASSWORD: dev123
+    MYSQL_DATABASE: ctacasal
+    MYSQL_USER: ctacasal
+    MYSQL_PASSWORD: eno1s
     #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
    ports:
    - "3366:3306"
@@ -44,8 +44,8 @@ services:
    environment:
     PMA_ARBITRARY: 1
     PMA_HOST: db
-    PMA_USER: dev
-    PMA_PASSWORD: dev123
+    PMA_USER: ctacasal
+    PMA_PASSWORD: eno1s
     PHP_UPLOAD_MAX_FILESIZE: 1G
     PHP_MAX_INPUT_VARS: 1G
    restart: always
