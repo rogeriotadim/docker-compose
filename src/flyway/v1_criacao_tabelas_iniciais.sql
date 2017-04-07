@@ -57,11 +57,15 @@ INSERT INTO `pagamentos` (`data_registro`, `data_pagto`, `pagador`, `descricao`,
             ('2017-02-28', '2017-02-07', 'ROG', 'Pagto Carlos (Pintura)', '201702', '850');
 
 INSERT INTO `pagamentos` (`data_registro`, `data_pagto`, `pagador`, `descricao`, `competencia`, `valor`) 
-    VALUES  ('2017-04-24', '2017-02-02', 'PAT', 'cta Luz Fev Atrasada'  , '201704',  '20.63'),
-            ('2017-04-24', '2017-02-05', 'PAT', 'cta Luz'               , '201704',  '54.18'),
-            ('2017-04-24', '2017-02-07', 'PAT', 'Loja 1,99 - vários'    , '201704', '198.10'),
-            ('2017-04-24', '2017-02-07', 'PAT', 'Peças Cozinha'         , '201704',  '87.10'),
-            ('2017-04-24', '2017-02-05', 'ROG', 'Internet'              , '201704',      '0');
+    VALUES  ('2017-04-24', '2017-02-02', 'PAT', 'cta Luz Fev Atrasada'                 , '201704',  '20.63'),
+            ('2017-04-24', '2017-02-05', 'PAT', 'cta Luz'                              , '201704',  '54.18'),
+            ('2017-04-24', '2017-02-07', 'PAT', 'Loja 1,99 - vários'                   , '201704', '198.10'),
+            ('2017-04-24', '2017-02-07', 'PAT', 'Peças Cozinha'                        , '201704',  '87.10'),
+            ('2017-04-24', '2017-02-05', 'ROG', 'Internet'                             , '201704',  '72.37'),
+            ('2017-04-24', '2017-02-05', 'ROG', 'Tx Embarque Viagem 17-19/03'          , '201704',  '52.12'),
+            ('2017-04-24', '2017-02-05', 'ROG', 'Smiles & Money 17-19/03 (6750Milhas)' , '201704', '202.50'),
+            ('2017-04-24', '2017-02-05', 'ROG', 'C&C MANUEL GAYA                     ' , '201704', '204.00'),
+            ('2017-04-24', '2017-02-05', 'ROG', 'Azul Pat 31/03                      ' , '201704', '457.57');
 
 -- parcelamentos
 insert into parcelamentos (`data_registro`, `data_compra`, `descricao`, `competencia_inicial`, `comprador`, `valor_total`, `numero_parcelas`)
