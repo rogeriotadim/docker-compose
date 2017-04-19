@@ -8,3 +8,4 @@ src/sessions
 src/sessions/*
 vendor
 composer.lock
+log.log
