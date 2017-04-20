@@ -5,12 +5,12 @@ $app['debug'] = true;
 
 include 'bootstrap.php';
 
-use Todos\Models\Message;
+use Appch\Models\Message;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Todos\Middleware\Logging as TodoLogging;
-use Todos\Middleware\Authentication as TodoAuth;
-use Todos\Models\User;
+use Appch\Middleware\Logging as TodoLogging;
+use Appch\Middleware\Authentication as TodoAuth;
+use Appch\Models\User;
 
 $app->before(function($request, $app) {
         TodoLogging::log($request, $app);
