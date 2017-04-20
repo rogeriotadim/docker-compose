@@ -5,64 +5,64 @@ $app['debug'] = true;
 
 include 'bootstrap.php';
 
-use Appch\Models\Message;
+use Appch\Models\Pagamento;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Appch\Middleware\Logging as TodoLogging;
-use Appch\Middleware\Authentication as TodoAuth;
+use Appch\Middleware\Logging as AppchLogging;
+use Appch\Middleware\Authentication as AppchAuth;
 use Appch\Models\User;
 
 $app->before(function($request, $app) {
-        TodoLogging::log($request, $app);
-        TodoAuth::authenticate($request, $app);
+        AppchLogging::log($request, $app);
+        AppchAuth::authenticate($request, $app);
 });
 
 $app ->get('/', function() {
     return "123";
 });
 
-$app ->get('/hdc/v1/message', function(Request $request) {
+$app ->get('/hdc/v1/pagamento', function(Request $request) {
       
-$message = Message::where('user_id', $request->attributes->get('userid'))->get();
+$pagamento = Pagamento::where('id_usuario', $request->attributes->get('userid'))->get();
 
 $payload = [];
-foreach ($message as $msg){
-        $payload[$msg->id] =
+foreach ($pagamento as $pagto){
+        $payload[$pagto->id] =
         [
-                'body' => $msg->body,
-                'user_id' => $msg->user_id,
-                'created_at' => $msg->created_at
+                'descricao' => $pagto->descricao,
+                'id_usuario' => $pagto->id_usuario,
+                'created_at' => $pagto->created_at
         ];
  }
   return json_encode($payload, JSON_UNESCAPED_SLASHES);
 });
 
-$app->get('/hdc/v1/message/{message_id}', function($message_id) use ($app) {
-   // $_message = $request->get('message');
-    $message = Message::where('id', $message_id)->get();
-    //$message = new Message();
+$app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
+   // $_pagamento = $request->get('pagamento');
+    $pagamento = Pagamento::where('id', $pagamento_id)->get();
+    //$pagamento = new Pagamento();
 
     $payload = [];
-foreach ($message as $msg){
-        $payload[$msg->id] =
+foreach ($pagamento as $pagto){
+        $payload[$pagto->id] =
         [
-                'body' => $msg->body,
-                'user_id' => $msg->user_id,
-                'created_at' => $msg->created_at
+                'descricao' => $pagto->descricao,
+                'id_usuario' => $pagto->id_usuario,
+                'created_at' => $pagto->created_at
         ];
  }
   return json_encode($payload, JSON_UNESCAPED_SLASHES);
 });
 
-$app->post('/hdc/v1/message', function(Request $request) use ($app) {
-    $_message = $request->get('message');
-    $message = new Message();
-    $message->body = $_message;
-    $message->user_id = $request->attributes->get('userid');
-    $message->save();
+$app->post('/hdc/v1/pagamento', function(Request $request) use ($app) {
+    $_pagamento = $request->get('pagamento');
+    $pagamento = new Pagamento();
+    $pagamento->descricao = $_pagamento;
+    $pagamento->id_usuario = $request->attributes->get('idusuario');
+    $pagamento->save();
 
-    if ($message->id) {
-        $payload = ['message_id' => $message->id, 'message_uri' => '/messages/' . $message->id];
+    if ($pagamento->id) {
+        $payload = ['pagamento_id' => $pagamento->id, 'pagamento_uri' => '/pagamentos/' . $pagamento->id];
         $code = 201;
     } else {
         $code = 400;
@@ -72,17 +72,17 @@ $app->post('/hdc/v1/message', function(Request $request) use ($app) {
     return $app->json($payload, $code);
 });
 
-$app->put('/hdc/v1/message/{message_id}', function($message_id, Request $request) use ($app) {
-    $_message = $request->get('message');
-    $message = Message::find($message_id);
-    $message->body = $_message;
+$app->put('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id, Request $request) use ($app) {
+    $_pagamento = $request->get('pagamento');
+    $pagamento = Pagamento::find($pagamento_id);
+    $pagamento->body = $_pagamento;
 
   
    
-    $message->save();
+    $pagamento->save();
 
-    if ($message->id) {
-        $payload = ['message_id' => $message->id, 'message_uri' => '/messages/' . $message->id];
+    if ($pagamento->id) {
+        $payload = ['pagamento_id' => $pagamento->id, 'pagamento_uri' => '/pagamentos/' . $pagamento->id];
         $code = 201;
     } else {
         $code = 400;
@@ -91,14 +91,14 @@ $app->put('/hdc/v1/message/{message_id}', function($message_id, Request $request
 
     return $app->json($payload, $code);
 });
-$app->delete('/hdc/v1/message/{message_id}', function($message_id) use ($app) {
-    $message = Message::find($message_id);
-    $message->delete();
+$app->delete('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
+    $pagamento = Pagamento::find($pagamento_id);
+    $pagamento->delete();
 
-    if ($message->exists) {
+    if ($pagamento->exists) {
         return new Response('', 400);
     } else {
-        return new Response('Your message is deleted', 204);
+        return new Response('Your pagamento is deleted', 204);
     }
 });
 

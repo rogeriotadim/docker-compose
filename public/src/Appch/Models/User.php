@@ -17,8 +17,8 @@ class User extends \Illuminate\Database\Eloquent\Model
         return false;
     }
 
-    public function message()
+    public function pagamento()
     {
-        return $this->hasMany("Appch\Models\Message");
+        return $this->hasMany("Appch\Models\Pagamento");
     }
 }
