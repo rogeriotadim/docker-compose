@@ -1,4 +1,4 @@
-public/*
+public/vendor
 !public/index.php
 src/nginx
 src/nginx/*
@@ -6,6 +6,5 @@ src/mariadb
 src/mariadb/*
 src/sessions
 src/sessions/*
-vendor
 composer.lock
 log.log
