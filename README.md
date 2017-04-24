@@ -12,6 +12,6 @@ PHP applications using Nginx, phpMyAdmin, MariaDB and PHP7-FPM and Composer.
     $ docker run --rm -v $(pwd):/app composer_dev require illuminate/database 5.2
 
 * Flyway
-    $ docker run --rm -v $(pwd)/src:/flyway/sql dhoer/flyway:4.1.2-mariadb-1.5.9 -url=jdbc:mariadb://ip:porta/dbname -user=user -password=pass migrate
+    $ docker run --rm -v $(pwd)/src/flyway/sql:/flyway/sql dhoer/flyway:4.1.2-mariadb-1.5.9 -url=jdbc:mariadb://ip:3366/dbname -user=username -password=password migrate
 
 
