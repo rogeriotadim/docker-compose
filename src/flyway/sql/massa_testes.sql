@@ -1,8 +1,8 @@
 -- Massa de testes
 -- Usuários
 INSERT INTO `horaconta`.`users` (`id`, `username`, `password`, `email`, `apikey`) VALUES
-(1, 'ROG', '000c285457fc971f862a79b786476c78812c8897063c6fa9c045f579a3b2d63f', 'rogeriotadim@gmail.com', 'd0763edaa9d9bd2a9516280e9044d885'),
-(2, 'PAT', '4d6b96d1e8f9bfcd28169bafe2e17da6e1a95f71e8ca6196d3affb4f95ca809f', 'sratadim.pat@gmail.com', 'd0763edaa9d9bd2a9516280e9044d000');
+(1, 'ROG', '$2y$10$HI0yYsCLb79oud7cA9tRYO9MbBA.OBjVBrwhZ/qRCkbCje.s597Re', 'rogeriotadim@gmail.com', 'd0763edaa9d9bd2a9516280e9044d885'),
+(2, 'PAT', '$2y$10$/q/y6jSUaoKdWW5u1NQLgePHJE6m5RGNCqXNkHbq7SyAmUkaOCAOO', 'sratadim.pat@gmail.com', 'd0763edaa9d9bd2a9516280e9044d000');
 
 
 
