@@ -29,9 +29,9 @@ $payload = [];
 foreach ($pagamento as $pagto){
         $payload[$pagto->id] =
         [
-                'descricao' => $pagto->descricao,
-                'id_usuario' => $pagto->id_usuario,
-                'created_at' => $pagto->created_at
+            'descricao' => $pagto->descricao,
+            'id_usuario' => $pagto->id_usuario,
+            'created_at' => $pagto->created_at
         ];
  }
   return json_encode($payload, JSON_UNESCAPED_SLASHES);
@@ -43,15 +43,15 @@ $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app)
     //$pagamento = new Pagamento();
 
     $payload = [];
-foreach ($pagamento as $pagto){
+    foreach ($pagamento as $pagto){
         $payload[$pagto->id] =
         [
-                'descricao' => $pagto->descricao,
-                'id_usuario' => $pagto->id_usuario,
-                'created_at' => $pagto->created_at
+            'descricao' => $pagto->descricao,
+            'id_usuario' => $pagto->id_usuario,
+            'created_at' => $pagto->created_at
         ];
- }
-  return json_encode($payload, JSON_UNESCAPED_SLASHES);
+    }
+    return json_encode($payload, JSON_UNESCAPED_SLASHES);
 });
 
 $app->post('/hdc/v1/pagamento', function(Request $request) use ($app) {
