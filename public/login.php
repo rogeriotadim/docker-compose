@@ -13,6 +13,9 @@ use Appch\Models\User;
 $app ->get('/login/v1/login', function(Request $request) {
     $userRequest = $request->headers->get("php-auth-user");
     $passRequest = $request->headers->get("php-auth-pw");
+    if($userRequest === null || $passRequest === null){
+        return false;
+    }
 
     $user = new User();
     $userLoged = $user->login($userRequest, $passRequest);
