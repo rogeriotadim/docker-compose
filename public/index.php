@@ -23,15 +23,23 @@ $app ->get('/', function() {
 
 $app ->get('/hdc/v1/pagamento', function(Request $request) {
       
-$pagamento = Pagamento::where('id_usuario', $request->attributes->get('userid'))->get();
+//$pagamento = Pagamento::where('id_usuario', $request->attributes->get('userid'))->get();
+$pagamento = Pagamento::all();
 
 $payload = [];
 foreach ($pagamento as $pagto){
-        $payload[$pagto->id] =
+        $payload[] =
         [
+            'id' => $pagto->id,
             'descricao' => $pagto->descricao,
             'id_usuario' => $pagto->id_usuario,
-            'created_at' => $pagto->created_at
+            'created_at' => $pagto->created_at,
+            'update_at' => $pagto->update_at,
+            'data_pagto' => $pagto->data_pagto,
+            'competencia' => $pagto->competencia,
+            'valor' => $pagto->valor,
+            'id_liquidacao' => $pagto->id_liquidacao,
+            'id_parcelamento' => $pagto->id_parcelamento
         ];
  }
   return json_encode($payload, JSON_UNESCAPED_SLASHES);
@@ -39,18 +47,23 @@ foreach ($pagamento as $pagto){
 
 $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
    // $_pagamento = $request->get('pagamento');
-    $pagamento = Pagamento::where('id', $pagamento_id)->get();
+    $pagamento = Pagamento::where('id', $pagamento_id)->take(1)->get();
     //$pagamento = new Pagamento();
 
-    $payload = [];
-    foreach ($pagamento as $pagto){
-        $payload[$pagto->id] =
-        [
-            'descricao' => $pagto->descricao,
-            'id_usuario' => $pagto->id_usuario,
-            'created_at' => $pagto->created_at
-        ];
-    }
+    $payload =
+    [
+        'id' => $pagto->id,
+        'descricao' => $pagto->descricao,
+        'id_usuario' => $pagto->id_usuario,
+        'created_at' => $pagto->created_at,
+        'update_at' => $pagto->update_at,
+        'data_pagto' => $pagto->data_pagto,
+        'competencia' => $pagto->competencia,
+        'valor' => $pagto->valor,
+        'id_liquidacao' => $pagto->id_liquidacao,
+        'id_parcelamento' => $pagto->id_parcelamento
+    ];
+
     return json_encode($payload, JSON_UNESCAPED_SLASHES);
 });
 
