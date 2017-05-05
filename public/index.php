@@ -21,6 +21,29 @@ $app ->get('/', function() {
     return "123";
 });
 
+$app ->get('/hdc/v1/pagamento/comp/{competencia}', function($competencia)  use ($app) {
+      
+$pagamento = Pagamento::where('competencia', "=", $competencia)->get();
+
+$payload = [];
+foreach ($pagamento as $pagto){
+        $payload[] =
+        [
+            'id' => $pagto->id,
+            'descricao' => $pagto->descricao,
+            'id_usuario' => $pagto->id_usuario,
+            'created_at' => $pagto->created_at,
+            'update_at' => $pagto->update_at,
+            'data_pagto' => $pagto->data_pagto,
+            'competencia' => $pagto->competencia,
+            'valor' => $pagto->valor,
+            'id_liquidacao' => $pagto->id_liquidacao,
+            'id_parcelamento' => $pagto->id_parcelamento
+        ];
+ }
+  return json_encode($payload, JSON_UNESCAPED_SLASHES);
+});
+
 $app ->get('/hdc/v1/pagamento', function(Request $request) {
       
 //$pagamento = Pagamento::where('id_usuario', $request->attributes->get('userid'))->get();
