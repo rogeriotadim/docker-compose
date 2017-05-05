@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Appch\Middleware\Logging as AppchLogging;
 use Appch\Models\User;
 
-$app ->get('/login/v1/login', function(Request $request) {
+$app ->get('/login/v1/login', function(Request $request)  use ($app) {
     $userRequest = $request->headers->get("php-auth-user");
     $passRequest = $request->headers->get("php-auth-pw");
-    if($userRequest === null || $passRequest === null){
-        return false;
+    if($userRequest === null || $passRequest === null || $userRequest === '' || $passRequest === ''){
+        $app->abort(401);
     }
 
     $user = new User();
@@ -23,12 +23,12 @@ $app ->get('/login/v1/login', function(Request $request) {
         return false;
     }
 
-    $payload = [];
-    $payload[$userLoged->id] =
+    $payload =
     [
         'username' => $userLoged->username,
         'id' => $userLoged->id,
-        'email' => $userLoged->email
+        'email' => $userLoged->email,
+        'apikey' => $userLoged->apikey
     ];
 
     return json_encode($payload, JSON_UNESCAPED_SLASHES);
