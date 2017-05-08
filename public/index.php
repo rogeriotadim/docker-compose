@@ -69,23 +69,25 @@ foreach ($pagamento as $pagto){
 });
 
 $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
-   // $_pagamento = $request->get('pagamento');
+    
     $pagamento = Pagamento::where('id', $pagamento_id)->take(1)->get();
-    //$pagamento = new Pagamento();
-
-    $payload =
-    [
-        'id' => $pagto->id,
-        'descricao' => $pagto->descricao,
-        'id_usuario' => $pagto->id_usuario,
-        'created_at' => $pagto->created_at,
-        'update_at' => $pagto->update_at,
-        'data_pagto' => $pagto->data_pagto,
-        'competencia' => $pagto->competencia,
-        'valor' => $pagto->valor,
-        'id_liquidacao' => $pagto->id_liquidacao,
-        'id_parcelamento' => $pagto->id_parcelamento
-    ];
+    //$pagamento = Pagamento::where('id', $pagamento_id)->get();
+    foreach ($pagamento as $pagto){
+        $payload = 
+            [
+                'id' => $pagto->id,
+                'descricao' => $pagto->descricao,
+                'id_usuario' => $pagto->id_usuario,
+                'created_at' => $pagto->created_at,
+                'update_at' => $pagto->update_at,
+                'data_pagto' => $pagto->data_pagto,
+                'competencia' => $pagto->competencia,
+                'valor' => $pagto->valor,
+                'id_liquidacao' => $pagto->id_liquidacao,
+                'id_parcelamento' => $pagto->id_parcelamento
+            ];
+        
+    }
 
     return json_encode($payload, JSON_UNESCAPED_SLASHES);
 });
