@@ -14,4 +14,12 @@ PHP applications using Nginx, phpMyAdmin, MariaDB and PHP7-FPM and Composer.
 * Flyway
     $ docker run --rm -v $(pwd)/src/flyway/sql:/flyway/sql dhoer/flyway:4.1.2-mariadb-1.5.9 -url=jdbc:mariadb://ip:3366/dbname -user=username -password=password migrate
 
+* Newman
+    $ docker run -i -t --rm --add-host dev.php:<iplocal> -v $(pwd)/test:/etc/newman postman/newman_ubuntu1404 --collection="postman_collection_v2.json" --environment="env.config"
+
+
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: d0763edaa9d9bd2a9516280e9044d885" -X GET http://dev.php/hdc/v1/pagamento/108
+
+
 
