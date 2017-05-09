@@ -5,12 +5,15 @@ $app['debug'] = true;
 
 include 'bootstrap.php';
 
+use Appch\Models\User;
 use Appch\Models\Pagamento;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use Appch\Middleware\Logging as AppchLogging;
 use Appch\Middleware\Authentication as AppchAuth;
-use Appch\Models\User;
+
 
 $app->before(function($request, $app) {
         AppchLogging::log($request, $app);
@@ -27,6 +30,30 @@ $pagamento = Pagamento::where('competencia', "=", $competencia)->get();
 
 $payload = [];
 foreach ($pagamento as $pagto){
+        $payload[] =
+        [
+            'id' => $pagto->id,
+            'descricao' => $pagto->descricao,
+            'id_usuario' => $pagto->id_usuario,
+            'created_at' => $pagto->created_at,
+            'update_at' => $pagto->update_at,
+            'data_pagto' => $pagto->data_pagto,
+            'competencia' => $pagto->competencia,
+            'valor' => $pagto->valor,
+            'id_liquidacao' => $pagto->id_liquidacao,
+            'id_parcelamento' => $pagto->id_parcelamento
+        ];
+ }
+  return json_encode($payload, JSON_UNESCAPED_SLASHES);
+});
+
+$app ->get('/hdc/v1/pagamento/usuario/{id_usuario}', function($id_usuario)  use ($app) {
+      
+//$user = User::where('id', "=", $id_usuario)->take(1)->get()->pagamentos;
+$pagamentos = User::find($id_usuario)->pagamentos;
+
+$payload = [];
+foreach ($pagamentos as $pagto){
         $payload[] =
         [
             'id' => $pagto->id,

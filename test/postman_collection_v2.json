@@ -160,6 +160,58 @@
 						"description": "Retorna os pagamentos da Compentencia"
 					},
 					"response": []
+				},
+				{
+					"name": "Pagamentos do Usuário ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests.statusCode200 = responseCode.code === 200;",
+									"var jsonData = JSON.parse(responseBody);",
+									"var criacao = \"2017-05-02 21:18:37.000000\";",
+									"var atualizacao = \"2017-05-02 21:18:37\";",
+									"var idPagto = Number(postman.getEnvironmentVariable(\"idPagamentoPAT\"));",
+									"",
+									"tests.listacomPagamentos = jsonData.length >=1;",
+									"",
+									"for (var i = 0; i < jsonData.length; i++){",
+									"    var pagamento = jsonData[i];",
+									"    if(pagamento.id === idPagto){",
+									"        tests.descricao = pagamento.descricao === \"cta Luz\";",
+									"        tests.idUsuario = pagamento.id_usuario === 2;",
+									"        tests.created_at = pagamento.created_at.date === criacao;",
+									"        tests.update_at = pagamento.update_at === atualizacao;",
+									"        tests.data_pagto = pagamento.data_pagto === \"2017-02-05\";",
+									"        tests.competencia = pagamento.competencia === 201704;",
+									"        tests.valor = pagamento.valor === \"54\";",
+									"        tests.id_liquidacao = pagamento.id_liquidacao === null;",
+									"        tests.id_parcelamento = pagamento.id_parcelamento === null;",
+									"    }",
+									"}",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{host}}/hdc/v1/pagamento/usuario/2",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d0763edaa9d9bd2a9516280e9044d000",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "recupera pagamentos do usuário"
+					},
+					"response": []
 				}
 			]
 		},
