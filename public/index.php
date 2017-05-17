@@ -18,6 +18,13 @@ use Appch\Middleware\Authentication as AppchAuth;
 $app->before(function($request, $app) {
         AppchLogging::log($request, $app);
         AppchAuth::authenticate($request, $app);
+        // tratamento do 'Content-Type':'application/json'
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $form = json_decode($request->getContent(), true);
+            $request->request->replace(is_array($form) ? $form : array());
+
+        }    
+        
 });
 
 $app ->get('/', function() {
@@ -120,11 +127,6 @@ $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app)
 });
 
 $app->post('/hdc/v1/pagamento', function(Request $request) use ($app) {
-    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-        $form = json_decode($request->getContent(), true);
-        $request->request->replace(is_array($form) ? $form : array());
-
-    }    
     $idUsuario = $request->request->get('id_usuario');
     $descricao = $request->request->get('descricao');
     $dataPagamento = $request->request->get('data_pagto');
