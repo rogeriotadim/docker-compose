@@ -19,7 +19,7 @@ PHP applications using Nginx, phpMyAdmin, MariaDB and PHP7-FPM and Composer.
 
 
 
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: d0763edaa9d9bd2a9516280e9044d885" -X GET http://dev.php/hdc/v1/pagamento/108???
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: d0763edaa9d9bd2a9516280e9044d885" -X GET http://dev.php/hdc/v1/pagamento/108??????
 
 
 
