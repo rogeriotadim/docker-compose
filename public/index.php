@@ -120,14 +120,28 @@ $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app)
 });
 
 $app->post('/hdc/v1/pagamento', function(Request $request) use ($app) {
-    $_pagamento = $request->get('pagamento');
+    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+        $form = json_decode($request->getContent(), true);
+        $request->request->replace(is_array($form) ? $form : array());
+
+    }    
+    $idUsuario = $request->request->get('id_usuario');
+    $descricao = $request->request->get('descricao');
+    $dataPagamento = $request->request->get('data_pagto');
+    $competencia = $request->request->get('competencia');
+    $valor = $request->request->get('valor');
+
     $pagamento = new Pagamento();
-    $pagamento->descricao = $_pagamento;
-    $pagamento->id_usuario = $request->attributes->get('idusuario');
+    $pagamento->descricao = $descricao;
+    $pagamento->id_usuario = $idUsuario;
+    $pagamento->data_pagto = $dataPagamento;
+    $pagamento->competencia = $competencia;
+    $pagamento->valor = $valor;
+    
     $pagamento->save();
 
     if ($pagamento->id) {
-        $payload = ['pagamento_id' => $pagamento->id, 'pagamento_uri' => '/pagamentos/' . $pagamento->id];
+        $payload = ['id' => $pagamento->id, 'pagamento_uri' => '/hdc/v1/pagamento/' . $pagamento->id];
         $code = 201;
     } else {
         $code = 400;
