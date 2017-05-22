@@ -1,11 +1,17 @@
 -- Massa de testes
+-- cleanup
+DELETE FROM `pagamentos`;
+DELETE FROM `parcelamentos`;
+DELETE FROM `liquidacoes`;
+DELETE FROM `users`;
+
 -- Usuários
 INSERT INTO `horaconta`.`users` (`id`, `created_at`, `updated_at`, `username`, `password`, `email`, `apikey`) VALUES
 (1, '2017-02-10 12:12:00', '2017-02-10 12:12:00', 'ROG', '$2y$10$HI0yYsCLb79oud7cA9tRYO9MbBA.OBjVBrwhZ/qRCkbCje.s597Re', 'rogeriotadim@gmail.com', 'd0763edaa9d9bd2a9516280e9044d885'),
 (2, '2017-02-10 12:12:00', '2017-02-10 12:12:00', 'PAT', '$2y$10$/q/y6jSUaoKdWW5u1NQLgePHJE6m5RGNCqXNkHbq7SyAmUkaOCAOO', 'sratadim.pat@gmail.com', 'd0763edaa9d9bd2a9516280e9044d000');
 
 
-
+-- pagamentos
 INSERT INTO `horaconta`.`pagamentos` (`id`, `created_at`, `updated_at`, `data_pagto`, `id_usuario`, `descricao`, `competencia`, `valor`) 
     VALUES  (1, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-02', 2, 'Tintas Carlos'         , '201702', 270),
             (2, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-05', 2, 'Viagem 03 à 06/fev'    , '201702', 744),
@@ -31,4 +37,25 @@ insert into `horaconta`.`parcelamentos` (`id`, `created_at`, `updated_at`, `data
             (5, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-09','AirBnb','201703',1,222,3),
             (6, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-09','Viagem Pat 10-13/03 para JPA','201703',1,1360.19,12),
             (7, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-16','Viagem Rog 17-19/03','201704',1,640.44,12),
-            (8, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-29','Voo Pat 03/04 p/ CGH','201704',1,572.39,6);
+            (8, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-29','Voo Pat 03/04 p/ CGH','201704',1,572.39,6),
+            (9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-03-29','Voo Pat 03/04 p/ CGH','201704',1,572.39,6);
+
+-- pagamentos do parcelamento 9
+INSERT INTO `horaconta`.`pagamentos` (`id`, `id_parcelamento`, `created_at`, `updated_at`, `data_pagto`, `id_usuario`, `descricao`, `competencia`, `valor`) 
+    VALUES  (14, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-02', 2, 'só na gastança'    , '201704',  20.63),
+            (15, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-05', 2, 'cta avião'         , '201704',  54.18),
+            (16, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-07', 2, 'Lojão 1,99'        , '201704', 198.10),
+            (17, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-07', 2, 'Peças Ferrari'     , '201704',  87.10),
+            (18, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-05', 1, 'Intranet'          , '201704',  72.37),
+            (19, 9, '2017-02-10 12:12:00', '2017-02-10 12:12:00', '2017-02-05', 1, 'Viagem 17-19/03'   , '201704',  52.12);
+
+-- liquidações
+INSERT INTO `horaconta`.`liquidacoes` (`id`, `created_at`, `updated_at`, `competencia`, `saldo`, `recebedor`,`descricao`)
+    VALUES  (1, '2017-02-10 12:12:00', '2017-02-10 12:12:00', 201703, 125.30, 2, 'Liquidação de Teste');
+
+-- pagamentos da liquidação 1
+INSERT INTO `horaconta`.`pagamentos` (`id`, `id_parcelamento`, `created_at`, `updated_at`, `data_pagto`, `id_usuario`, `descricao`, `competencia`, `valor`) 
+    VALUES  (20, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-02', 2, 'Teste Liquida 1 - 25'    , '201704',  25.30),
+            (21, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-05', 2, 'cta avião'         , '201704',  40.50),
+            (22, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-07', 2, 'Lojão 1,99'        , '201704', 59.50);
+
