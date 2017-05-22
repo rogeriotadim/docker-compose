@@ -13,7 +13,7 @@ CREATE TABLE `horaconta`.`users` (
     PRIMARY KEY (`id`), 
     INDEX `apikey_idx` (`apikey`), 
     UNIQUE `email_idx` (`email`)) 
-    ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+    ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
  
 -- Negócio
 -- Liquidações
@@ -28,7 +28,7 @@ CREATE TABLE `horaconta`.`liquidacoes` (
     PRIMARY KEY (`id`), 
     INDEX `liquidacoes_created_at_idx` (`created_at`), 
     UNIQUE `comp_liquida_idx` (`competencia`)) 
-    ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+    ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 
 -- Parcelamentos
@@ -45,7 +45,7 @@ CREATE TABLE `horaconta`.`parcelamentos` (
     PRIMARY KEY (`id`), 
     INDEX `parcelamento_created_at_idx` (`created_at`), 
     INDEX `comp_inicial_idx` (`competencia_inicial`)) 
-    ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+    ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 ALTER TABLE `horaconta`.`parcelamentos` ADD CONSTRAINT `usuario_parcelamento` FOREIGN KEY (`id_usuario`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;            
 
