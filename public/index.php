@@ -10,6 +10,7 @@ use Appch\Models\Pagamento;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Appch\Middleware\Logging as AppchLogging;
 use Appch\Middleware\Authentication as AppchAuth;
@@ -154,24 +155,48 @@ $app->post('/hdc/v1/pagamento', function(Request $request) use ($app) {
 });
 
 $app->put('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id, Request $request) use ($app) {
-    $_pagamento = $request->get('pagamento');
+    
+    $descricao = $request->request->get('descricao');
+    $dataPagamento = $request->request->get('data_pagto');
+    $competencia = $request->request->get('competencia');
+    $valor = $request->request->get('valor');
+
     $pagamento = Pagamento::find($pagamento_id);
-    $pagamento->body = $_pagamento;
 
-  
-   
-    $pagamento->save();
+    $code = 0;
 
-    if ($pagamento->id) {
-        $payload = ['pagamento_id' => $pagamento->id, 'pagamento_uri' => '/pagamentos/' . $pagamento->id];
-        $code = 201;
-    } else {
-        $code = 400;
-        $payload = [];
+    if($pagamento->id_liquidacao){
+        $code = Response::HTTP_BAD_REQUEST;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['mensagem_de_erro' => 'pagamento_liquidado', 'id_liquidacao' => $pagamento->id_liquidacao];
     }
 
-    return $app->json($payload, $code);
+    if(!$pagamento->id){
+        $code = Response::HTTP_BAD_REQUEST;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['mensagem_de_erro' => 'pagamento_nao_encontrado'];
+    }
+
+    if($code === 0) {
+        $pagamento->descricao = $descricao;
+        $pagamento->dataPagamento = $dataPagamento;
+        $pagamento->competencia = $competencia;
+        $pagamento->valor = $valor;
+    
+        $pagamento->save();
+
+        $code = Response::HTTP_OK;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['pagamento_id' => $pagamento->id, 'pagamento_uri' => '/hdc/v1/pagamento/' . $pagamento->id];
+    }
+
+
+    $jsonResp = JsonResponse::create($payload, $code, $header);
+    $jsonResp->setStatusCode($code);
+    return $jsonResp;
+    // return JsonResponse::create(['message' => 'error'], 401)->setStatusCode(Response::HTTP_BAD_REQUEST);
 });
+
 $app->delete('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
     $pagamento = Pagamento::find($pagamento_id);
     $pagamento->delete();

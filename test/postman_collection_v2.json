@@ -253,6 +253,47 @@
 						"description": "Inclusão de Pagamento"
 					},
 					"response": []
+				},
+				{
+					"name": "Pagamento não encontrado - Alterar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests.statusCode400 = responseCode.code === 400;",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests.mensagem = jsonData.mensagem_de_erro === 'pagamento_nao_encontrado';",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{host}}/hdc/v1/pagamento/2000",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "d0763edaa9d9bd2a9516280e9044d885",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\n\t\t\"id_usuario\":\"1\",\n\t\t\"descricao\":\"Teste Alteração de Pagamento via Postman/Newman\",\n\t\t\"data_pagto\":\"2017-04-05\",\n\t\t\"competencia\":\"201704\",\n\t\t\"valor\":\"54.339\"\n\t}\n"
+						},
+						"description": "Tentativa de Alteração de Pagamento inexistente"
+					},
+					"response": []
 				}
 			]
 		},
