@@ -54,7 +54,7 @@ INSERT INTO `horaconta`.`liquidacoes` (`id`, `created_at`, `updated_at`, `compet
     VALUES  (1, '2017-02-10 12:12:00', '2017-02-10 12:12:00', 201703, 125.30, 2, 'Liquidação de Teste');
 
 -- pagamentos da liquidação 1
-INSERT INTO `horaconta`.`pagamentos` (`id`, `id_parcelamento`, `created_at`, `updated_at`, `data_pagto`, `id_usuario`, `descricao`, `competencia`, `valor`) 
+INSERT INTO `horaconta`.`pagamentos` (`id`, `id_liquidacao`, `created_at`, `updated_at`, `data_pagto`, `id_usuario`, `descricao`, `competencia`, `valor`) 
     VALUES  (20, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-02', 2, 'Teste Liquida 1 - 25'    , '201704',  25.30),
             (21, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-05', 2, 'cta avião'         , '201704',  40.50),
             (22, 1, '2017-04-10 12:12:00', '2017-04-10 12:12:00', '2017-04-07', 2, 'Lojão 1,99'        , '201704', 59.50);
