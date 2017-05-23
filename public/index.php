@@ -44,7 +44,7 @@ foreach ($pagamento as $pagto){
             'descricao' => $pagto->descricao,
             'id_usuario' => $pagto->id_usuario,
             'created_at' => $pagto->created_at,
-            'update_at' => $pagto->update_at,
+            'updated_at' => $pagto->updated_at,
             'data_pagto' => $pagto->data_pagto,
             'competencia' => $pagto->competencia,
             'valor' => $pagto->valor,
@@ -68,7 +68,7 @@ foreach ($pagamentos as $pagto){
             'descricao' => $pagto->descricao,
             'id_usuario' => $pagto->id_usuario,
             'created_at' => $pagto->created_at,
-            'update_at' => $pagto->update_at,
+            'updated_at' => $pagto->updated_at,
             'data_pagto' => $pagto->data_pagto,
             'competencia' => $pagto->competencia,
             'valor' => $pagto->valor,
@@ -92,7 +92,7 @@ foreach ($pagamento as $pagto){
             'descricao' => $pagto->descricao,
             'id_usuario' => $pagto->id_usuario,
             'created_at' => $pagto->created_at,
-            'update_at' => $pagto->update_at,
+            'updated_at' => $pagto->updated_at,
             'data_pagto' => $pagto->data_pagto,
             'competencia' => $pagto->competencia,
             'valor' => $pagto->valor,
@@ -114,7 +114,7 @@ $app->get('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app)
                 'descricao' => $pagto->descricao,
                 'id_usuario' => $pagto->id_usuario,
                 'created_at' => $pagto->created_at,
-                'update_at' => $pagto->update_at,
+                'updated_at' => $pagto->updated_at,
                 'data_pagto' => $pagto->data_pagto,
                 'competencia' => $pagto->competencia,
                 'valor' => $pagto->valor,
@@ -199,13 +199,39 @@ $app->put('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id, Request $r
 
 $app->delete('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
     $pagamento = Pagamento::find($pagamento_id);
-    $pagamento->delete();
 
-    if ($pagamento->exists) {
-        return new Response('', 400);
-    } else {
-        return new Response('Your pagamento is deleted', 204);
+    $code = 0;
+
+    if($pagamento->id_liquidacao){
+        $code = Response::HTTP_BAD_REQUEST;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['mensagem_de_erro' => 'pagamento_liquidado', 'id_liquidacao' => $pagamento->id_liquidacao];
     }
+
+    if($pagamento->id_parcelamento){
+        $code = Response::HTTP_BAD_REQUEST;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['mensagem_de_erro' => 'pagamento_de_parcelamento', 'id_parcelamento' => $pagamento->id_parcelamento];
+    }
+
+    if(!$pagamento->id){
+        $code = Response::HTTP_NOT_FOUND;
+        $header = array('X-Status-Code' => $code);
+        $payload = ['mensagem_de_erro' => 'pagamento_nao_encontrado'];
+    }
+
+    if($code === 0) {
+    
+        $pagamento->delete();
+
+        $code = Response::HTTP_OK;
+        $payload = ['pagamento_id' => $pagamento->id, 'situacao' => 'deletado'];
+    }
+    
+    $jsonResp = JsonResponse::create($payload, $code, $header);
+    $jsonResp->setStatusCode($code);
+    return $jsonResp;
+
 });
 
 
