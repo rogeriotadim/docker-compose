@@ -1,6 +1,6 @@
 FROM php:7-fpm
-ENV http_proxy 'http://localhost:3128'
-ENV https_proxy 'http://localhost:3128'
+ENV http_proxy 'http://10.0.2.15:3128'
+ENV https_proxy 'http://10.0.2.15:3128'
 COPY apt.conf /etc/apt/apt.conf
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
