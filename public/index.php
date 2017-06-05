@@ -195,6 +195,7 @@ $app->put('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id, Request $r
     $jsonResp->setStatusCode($code);
     return $jsonResp;
     // return JsonResponse::create(['message' => 'error'], 401)->setStatusCode(Response::HTTP_BAD_REQUEST);
+    // return $app->json(array('mensagem_de_erro' => 'pagamento_nao_encontrado'), 400);
 });
 
 $app->delete('/hdc/v1/pagamento/{pagamento_id}', function($pagamento_id) use ($app) {
