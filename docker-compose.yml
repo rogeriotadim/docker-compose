@@ -8,7 +8,7 @@ services:
    ports:
    - "80:80"
    volumes:
-   - ./public:/public
+   - ../backend:/public
    - ./src/site.conf:/etc/nginx/conf.d/site.conf
    - ./src/nginx/logs:/var/log/nginx/
 
@@ -18,7 +18,7 @@ services:
    mem_limit: 96m
    container_name: PHP7
    volumes:
-   - ./public:/public
+   - ../backend:/public
 
   db:
    image: mariadb:latest

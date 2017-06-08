@@ -1,10 +1,7 @@
-public/vendor
-public/src/Appch/Config/config.ini.php
 src/nginx
 src/nginx/*
 src/mariadb
 src/mariadb/*
 src/sessions
 src/sessions/*
-composer.lock
 log.log
